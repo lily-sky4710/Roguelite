@@ -522,6 +522,14 @@ PrefabInstance:
       propertyPath: rigidbody
       value: 
       objectReference: {fileID: 1343076945}
+    - target: {fileID: 75218106868531659, guid: ea5ec372cab838148ac5a31cb061e7c3, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
+      value: 0.016101837
+      objectReference: {fileID: 0}
+    - target: {fileID: 75218106868531659, guid: ea5ec372cab838148ac5a31cb061e7c3, type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 0.4615307
+      objectReference: {fileID: 0}
     - target: {fileID: 119624979425033704, guid: ea5ec372cab838148ac5a31cb061e7c3, type: 3}
       propertyPath: m_Constraints
       value: 112
@@ -564,6 +572,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 922768362437132152, guid: ea5ec372cab838148ac5a31cb061e7c3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033489804558616275, guid: ea5ec372cab838148ac5a31cb061e7c3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1033489804558616275, guid: ea5ec372cab838148ac5a31cb061e7c3, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6458213779739544490, guid: ea5ec372cab838148ac5a31cb061e7c3, type: 3}
