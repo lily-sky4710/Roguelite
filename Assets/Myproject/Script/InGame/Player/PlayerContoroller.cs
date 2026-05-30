@@ -1,6 +1,9 @@
+using Core.Interface;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace TPSRoguelite.InGame.Player
 {
@@ -16,6 +19,18 @@ namespace TPSRoguelite.InGame.Player
         //レーザーポインターの描画距離
         private const float LASER_MAX_DISTANCE = 50f;
 
+        //相手に与えるダメージ
+        private const int ATACK_DAMAGE = 20;
+
+        //攻撃距離（射撃範囲）
+        private const float ATACK_RANGE = 50f;
+
+        //最大弾数
+        private const int MAX_AMMO = 30;
+
+        //リロード時間
+        private const float RELOAD_TIME = 1.5f;
+
         //物理演算コンポーネント
         [SerializeField] private Rigidbody rigidbody;
 
@@ -27,18 +42,27 @@ namespace TPSRoguelite.InGame.Player
 
         private Vector2 moveInput = Vector2.zero;
 
+        //自動生成されたinput
         private PlayerInputActions inputActions;
 
         //カメラのトランスフォーム
         private Transform mainCameraTransform;
 
+        //リロードしているか
+        private bool isReloading;
+
         //外部(アニメーションとかUIとか)に現在の速度を伝えるために保存する
         public Vector3 CurrentVelocity { get; private set; }
 
+        public int CurrentAmmo {  get; private set; }
+
         private void Awake()
         {
+            CurrentAmmo = MAX_AMMO;
+
             inputActions = new PlayerInputActions();
             inputActions.Player.Fire.performed += OnFire;
+            inputActions.Player.Reload.performed += OnReload;
 
             if(UnityEngine.Camera.main != null)
             {
@@ -63,11 +87,14 @@ namespace TPSRoguelite.InGame.Player
         void Update()
         {
             moveInput = inputActions.Player.Move.ReadValue<Vector2>();
-            DrawLaserPointer();
         }
         private void FixedUpdate()
         {
             Move();
+        }
+        private void LateUpdate()
+        {
+            DrawLaserPointer();
         }
         private void Move()//移動処理
         {
@@ -110,7 +137,44 @@ namespace TPSRoguelite.InGame.Player
 
         private void OnFire(InputAction.CallbackContext context)
         {
-            Debug.Log("Fire");
+            Ray ray = new Ray(mainCameraTransform.position, mainCameraTransform.forward);
+
+            //光線に何か当たったか判定
+            if(Physics.Raycast(ray, out RaycastHit hitInfo, ATACK_RANGE))
+            {
+                Debug.Log($"{hitInfo.collider.name}に命中!");
+
+                //当たった相手がIDamageableを持っているか確認
+                IDamageable target = hitInfo.collider.GetComponent<IDamageable>();
+
+                //ダメージを受ける性質を持ったオブジェクトであればダメージを与える
+                if( target != null)
+                {
+                    target.TakeDamage(ATACK_DAMAGE);
+                }
+            }
+        }
+
+        private void OnReload(InputAction.CallbackContext context)
+        {
+            if(isReloading && CurrentAmmo == MAX_AMMO)
+            {
+                return;
+            }
+
+            ReloadAsynk().Forget();
+        }
+
+        private async UniTask ReloadAsynk()
+        {
+            isReloading = true;
+            Debug.Log("リロード中");
+
+            await UniTask.Delay(TimeSpan.FromSeconds(RELOAD_TIME), cancellationToken: this.GetCancellationTokenOnDestroy());
+
+            CurrentAmmo = MAX_AMMO;
+            isReloading = false;
+            Debug.Log("リロード完了");
         }
 
         //レーザーポインターの描画
