@@ -104,7 +104,7 @@ namespace TPSRoguelite.InGame.Camera
             Quaternion rotate = Quaternion.Euler(currentPitch, currentYaw, 0f);
 
             //注視点から、計算した角度から後ろ方向へ距離分だけ離した位置を計算
-            Vector3 cameraPosition = target.position - (rotate * Vector3.forward * DISTANCE);
+            Vector3 cameraPosition = targetPosition - (rotate * Vector3.forward * DISTANCE);
 
             //
             transform.position = cameraPosition;
