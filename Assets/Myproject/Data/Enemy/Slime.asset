@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e36296fcbec15642ba8685dbf3f86ab, type: 3}
   m_Name: Slime
   m_EditorClassIdentifier: 
+  <EnemyName>k__BackingField: Slime
+  <MaxHP>k__BackingField: 20
+  <MoveSpeed>k__BackingField: 5
