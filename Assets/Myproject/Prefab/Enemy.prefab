@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9af004ec36c248f4a82149fa9488ec31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <EnemyDataAsset>k__BackingField: {fileID: 11400000, guid: 80a4c0d9171362d4f91b5e4345b9ceeb, type: 2}
 --- !u!195 &7772440864909660455
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -159,4 +160,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b2246e29749de1419cdacb921f54c86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyState: {fileID: 3458865238507405923}
   navMeshAgent: {fileID: 7772440864909660455}
