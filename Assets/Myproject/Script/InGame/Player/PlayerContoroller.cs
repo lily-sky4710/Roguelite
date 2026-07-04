@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Cysharp.Threading.Tasks;
 using System;
-using TPSRoguelite.InGame.Data;
 using System.Threading;
+using Core.MasterData;
+using TPSRoguelite.InGame.Enum;
 
 namespace TPSRoguelite.InGame.Player
 {
@@ -34,7 +35,7 @@ namespace TPSRoguelite.InGame.Player
         [SerializeField] private LineRenderer laserLineRenderer;
 
         //ïêäÌÇÃÉfÅ[É^
-        [SerializeField] private WeaponData currentWeapon;
+        private WeaponDataRecord currentWeapon;
 
         private Vector2 moveInput = Vector2.zero;
 
@@ -157,7 +158,7 @@ namespace TPSRoguelite.InGame.Player
                 fireCts = new CancellationTokenSource();
                 var linkedCts = CancellationTokenSource.CreateLinkedTokenSource(fireCts.Token,this.GetCancellationTokenOnDestroy());
 
-                switch (currentWeapon.WeapomFireType)
+                switch ((FireType)currentWeapon.WeapomFireType)
                 {
                     case Enum.FireType.SemAuto:
                         ShootSemAutoAsync(this.GetCancellationTokenOnDestroy()).Forget();

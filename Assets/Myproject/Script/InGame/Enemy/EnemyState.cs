@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Core.Interface;
 using UnityEditor;
+using Core.MasterData;
 
 namespace TPSRoguelite.InGame.Enemy
 {
@@ -9,7 +10,7 @@ namespace TPSRoguelite.InGame.Enemy
     public class EnemyState : MonoBehaviour,IDamageable
     {
         //“G‚Ìƒf[ƒ^
-        [field: SerializeField] public EnemyData EnemyDataAsset { get; private set; }
+        public EnemyDataRecord EnemyDataAsset { get; private set; }
 
         //Œ»İ‚Ì‘Ì—Í
         public int CurrentHP { get; private set; }
