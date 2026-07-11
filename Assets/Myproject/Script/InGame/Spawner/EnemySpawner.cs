@@ -3,6 +3,7 @@ using UnityEngine.AI;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using TPSRoguelite.InGame.Enemy;
+using Core.MasterData;
 
 namespace TPSRoguelite.InGame.Spawner
 {
@@ -27,28 +28,27 @@ namespace TPSRoguelite.InGame.Spawner
         //敵を待機させておくプール
         private Queue<EnemyState> enemyPool = new Queue<EnemyState>();
 
-        private void Awake()
+        public void Setup()
         {
-            if(enemyPrefab == null)
+            if (enemyPrefab == null)
             {
                 return;
             }
 
             //ゲーム開始時に、あらかじめ用意した数だけ生成しておく
-            for(int i = 0; i < POOL_SIZE; i++)
+            for (int i = 0; i < POOL_SIZE; i++)
             {
                 GameObject enemyObj = Instantiate(enemyPrefab);
                 EnemyState enemy = enemyObj.GetComponent<EnemyState>();
-                if(enemy != null)
+                if (enemy != null)
                 {
+                    ulong randomId = (ulong)UnityEngine.Random.Range(1, MasterDataAccessor.Instance.Count<EnemyDataRecord>());
+                    enemy.Initialize(randomId);
                     enemy.gameObject.SetActive(false);
                     enemyPool.Enqueue(enemy);
                 }
             }
-        }
 
-        private void Start()
-        {
             spawnLoopAsync().Forget();
         }
 
@@ -115,7 +115,7 @@ namespace TPSRoguelite.InGame.Spawner
             enemy.transform.position = safePosition;
             enemy.transform.rotation = spawnPoint.rotation;
 
-            enemy.gameObject.SetActive(true);
+            enemy.Setup();
         }
 
         //プールに戻す

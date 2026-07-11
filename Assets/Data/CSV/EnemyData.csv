@@ -1,0 +1,4 @@
+Id,EnemyName,MaxHP,MoveSpeed
+1,スライム,20,30
+2,ゴブリン,50,50
+3,ゾンビ,100,20

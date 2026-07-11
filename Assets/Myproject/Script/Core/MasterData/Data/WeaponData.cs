@@ -31,10 +31,12 @@ namespace Core.MasterData
 
         //ÉäÉçÅ[Éhéûä‘
         [field: SerializeField] public float ReloadTime { get; private set; }
-        [CreateAssetMenu(fileName = "NewWeaponData", menuName = "Scriptable Object/WeaponData")]
-        public class WeaponData : ScriptableObject, IMasterDataContainer<WeaponDataRecord>
-        {
-            [field: SerializeField] public List<WeaponDataRecord> Records { get; private set; }
-        }
+        
+    }
+
+    [CreateAssetMenu(fileName = "NewWeaponData", menuName = "Scriptable Object/WeaponData")]
+    public class WeaponData : ScriptableObject, IMasterDataContainer<WeaponDataRecord>
+    {
+        [field: SerializeField] public List<WeaponDataRecord> Records { get; private set; }
     }
 }

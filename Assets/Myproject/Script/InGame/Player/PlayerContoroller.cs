@@ -34,6 +34,9 @@ namespace TPSRoguelite.InGame.Player
         //レーザーポインターの描画コンポーネント
         [SerializeField] private LineRenderer laserLineRenderer;
 
+        //武器のID(デフォルトは1)
+        [SerializeField] private ulong weaponId = 1;
+
         //武器のデータ
         private WeaponDataRecord currentWeapon;
 
@@ -61,7 +64,14 @@ namespace TPSRoguelite.InGame.Player
 
         private void Awake()
         {
-            if(currentWeapon != null)
+            gameObject.SetActive(false);
+        }
+
+        public void Setup()
+        {
+            currentWeapon = MasterDataAccessor.Instance.GetById<WeaponDataRecord>(weaponId);
+
+            if (currentWeapon != null)
             {
                 CurrentAmmo = currentWeapon.MaxAmmo;
             }
@@ -75,7 +85,7 @@ namespace TPSRoguelite.InGame.Player
             inputActions.Player.Fire.canceled += OnFire;
             inputActions.Player.Reload.performed += OnReload;
 
-            if(UnityEngine.Camera.main != null)
+            if (UnityEngine.Camera.main != null)
             {
                 mainCameraTransform = UnityEngine.Camera.main.transform;
             }
@@ -83,15 +93,17 @@ namespace TPSRoguelite.InGame.Player
             {
                 Debug.LogError("MainCameraが見つかりません");
             }
+
+            gameObject.SetActive(true);
         }
 
         private void OnEnable()
         {
-            inputActions.Enable();
+            inputActions?.Enable();
         }
         private void OnDisable()
         {
-            inputActions.Disable();
+            inputActions?.Disable();
         }
 
 
