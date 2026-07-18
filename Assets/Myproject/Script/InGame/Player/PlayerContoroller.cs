@@ -121,10 +121,20 @@ namespace TPSRoguelite.InGame.Player
         }
         private void Move()//移動処理
         {
-            if (rigidbody == null)
+            if (rigidbody == null || mainCameraTransform == null)
             {
                 Debug.LogError("Rigidbodyが設定されていません");
                 return;
+            }
+
+            Vector3 cameraForward = mainCameraTransform.forward;
+            cameraForward.y = 0f;
+            cameraForward.Normalize();
+
+            if(cameraForward != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+                rigidbody.rotation = Quaternion.Slerp(rigidbody.rotation, targetRotation, ROTATE_SPEED * Time.deltaTime);
             }
 
             //入力がない場合はピタッと止めておく
@@ -136,19 +146,12 @@ namespace TPSRoguelite.InGame.Player
             }
 
             //カメラの基準の計算に変更
-            Vector3 cameraForwrad = mainCameraTransform.forward;
             Vector3 cameraRight = mainCameraTransform.right;
 
-            cameraForwrad.y = 0f;
             cameraRight.y = 0f;
-            cameraForwrad.Normalize();
             cameraRight.Normalize();
 
-            Vector3 moveDirection = (cameraForwrad * moveInput.y + cameraRight * moveInput.x).normalized;
-
-            //キャラクターを進行方向へ滑らかに振り向かせる
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
-            rigidbody.rotation = Quaternion.Slerp(rigidbody.rotation, targetRotation, ROTATE_SPEED * Time.fixedDeltaTime);
+            Vector3 moveDirection = (cameraForward * moveInput.y + cameraRight * moveInput.x).normalized;
 
             Vector3 targetVelocity = moveDirection * MOVE_SPEED;
             rigidbody.linearVelocity = new Vector3(targetVelocity.x, rigidbody.linearVelocity.y, targetVelocity.z);

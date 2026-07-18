@@ -369,6 +369,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1343076950}
+  lookSesitivity: 0.2
+  minPitch: -10
+  maxPitch: 60
+  zoomSpeed: 5
+  targetDistance: -5
+  targetHelghtOffset: 1.2
+  targetShoulderOffset: 0.8
 --- !u!114 &273861426
 MonoBehaviour:
   m_ObjectHideFlags: 0
