@@ -7,6 +7,10 @@ using System;
 using System.Threading;
 using Core.MasterData;
 using TPSRoguelite.InGame.Enum;
+using TMPro;
+using UnityEngine.UI;
+using DG.Tweening;
+using UnityEngine.Rendering;
 
 namespace TPSRoguelite.InGame.Player
 {
@@ -39,6 +43,18 @@ namespace TPSRoguelite.InGame.Player
 
         //マズルフラッシュのエフェクト
         [SerializeField] private ParticleSystem muzzleFlash;
+
+        //武器の名前
+        [SerializeField] private TextMeshProUGUI weaponName;
+
+        //弾のテキスト
+        [SerializeField] private TextMeshProUGUI ammoText;
+
+        //リロード中のテキストと画像をまとめたオブジェクト
+        [SerializeField] private GameObject reloadUI;
+
+        //リロード中の時間がわかるサークル画像
+        [SerializeField] private Image reloadCircleImage;
 
         //武器のデータ
         private WeaponDataRecord currentWeapon;
@@ -77,6 +93,7 @@ namespace TPSRoguelite.InGame.Player
             if (currentWeapon != null)
             {
                 CurrentAmmo = currentWeapon.MaxAmmo;
+                UpdateWeaponUI();
             }
             else
             {
@@ -95,6 +112,11 @@ namespace TPSRoguelite.InGame.Player
             else
             {
                 Debug.LogError("MainCameraが見つかりません");
+            }
+
+            if(reloadUI != null)
+            {
+                reloadUI.SetActive(false);
             }
 
             gameObject.SetActive(true);
@@ -211,13 +233,14 @@ namespace TPSRoguelite.InGame.Player
 
             if(CurrentAmmo == 0)
             {
-                ReloadAsync().Forget();
+                Reload();
                 return;
             }
 
             canShoot = false;
 
             CurrentAmmo--;
+            UpdateCurrentAmmoUI();
             Debug.Log($"セミオートで撃った!弾数:{CurrentAmmo}");
             Shoot();
 
@@ -235,11 +258,12 @@ namespace TPSRoguelite.InGame.Player
             {
                 if(CurrentAmmo <= 0)
                 {
-                    ReloadAsync().Forget();
+                    Reload();
                     break;
                 }
 
                 CurrentAmmo--;
+                UpdateCurrentAmmoUI();
                 Shoot();
                 Debug.Log($"バースト!残弾数 : {CurrentAmmo}");
 
@@ -258,11 +282,12 @@ namespace TPSRoguelite.InGame.Player
             {
                 if(CurrentAmmo <= 0)
                 {
-                    ReloadAsync().Forget();
+                    Reload();
                     break;
                 }
 
                 CurrentAmmo--;
+                UpdateCurrentAmmoUI();
                 Debug.Log($"フルオ－ト!残弾数 : {CurrentAmmo}");
                 Shoot();
 
@@ -311,19 +336,24 @@ namespace TPSRoguelite.InGame.Player
                 return;
             }
 
-            ReloadAsync().Forget();
+            Reload();
         }
 
-        private async UniTask ReloadAsync()
+        private void Reload()
         {
             isReloading = true;
-            Debug.Log("リロード中");
 
-            await UniTask.Delay(TimeSpan.FromSeconds(currentWeapon.ReloadTime), cancellationToken: this.GetCancellationTokenOnDestroy());
+            if(reloadUI != null)
+            {
+                reloadUI.SetActive(true);
+            }
 
-            CurrentAmmo = currentWeapon.MaxAmmo;
-            isReloading = false;
-            Debug.Log("リロード完了");
+            if(reloadCircleImage != null)
+            {
+                reloadCircleImage.fillAmount = 0f;
+            }
+
+            DOVirtual.Float(0f, 1f, currentWeapon.ReloadTime, UpdateReloadUI).SetEase(Ease.Linear).OnComplete(FinishReload);
         }
 
         //レーザーポインターの描画
@@ -345,6 +375,60 @@ namespace TPSRoguelite.InGame.Player
             {
                 laserLineRenderer.SetPosition(1, ray.GetPoint(LASER_MAX_DISTANCE));
             }
+        }
+
+        private void UpdateWeaponUI()
+        {
+            if(weaponName != null)
+            {
+                weaponName.SetText(currentWeapon.WeaponName);
+
+                //色で武器のタイプがわかる
+                switch ((FireType)currentWeapon.WeapomFireType)
+                {
+                    case FireType.SemAuto:
+                        weaponName.color = Color.white;
+                        break;
+
+                    case FireType.Burst:
+                        weaponName.color = Color.yellow;
+                        break;
+
+                    case FireType.FullAuto:
+                        weaponName.color = Color.red;
+                        break;
+                }
+            }
+
+            UpdateCurrentAmmoUI();
+        }
+
+        private void UpdateCurrentAmmoUI()
+        {
+            if(ammoText != null)
+            {
+                ammoText.SetText($"{CurrentAmmo}/{currentWeapon.MaxAmmo}");
+            }
+        }
+
+        private void UpdateReloadUI(float value)
+        {
+            if(reloadCircleImage != null)
+            {
+                reloadCircleImage.fillAmount = value;
+            }
+        }
+
+        private void FinishReload()
+        {
+            if(reloadUI != null)
+            {
+                reloadUI.SetActive(false);
+            }
+
+            CurrentAmmo = currentWeapon.MaxAmmo;
+            UpdateCurrentAmmoUI();
+            isReloading = false;
         }
     }
 }
