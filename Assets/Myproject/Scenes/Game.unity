@@ -835,8 +835,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3a2d3f409ddfd9d4386e599373f7c64a, type: 2}
+  m_sharedMaterial: {fileID: 2739144328018350015, guid: 3a2d3f409ddfd9d4386e599373f7c64a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -971,8 +971,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3a2d3f409ddfd9d4386e599373f7c64a, type: 2}
+  m_sharedMaterial: {fileID: 2739144328018350015, guid: 3a2d3f409ddfd9d4386e599373f7c64a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1951,7 +1951,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 7a6d7d4426787214c9faa2f191b2fb2f, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -2625,7 +2625,7 @@ PrefabInstance:
     - target: {fileID: 4086271368391326275, guid: ea5ec372cab838148ac5a31cb061e7c3, type: 3}
       propertyPath: levelUpEffect
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 2901051652073368957}
     - target: {fileID: 4086271368391326275, guid: ea5ec372cab838148ac5a31cb061e7c3, type: 3}
       propertyPath: reloadCircleImage
       value: 
@@ -2651,6 +2651,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41be9eba89cb7334faa6525fde4dd4aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!198 &2901051652073368957 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 984735423254575413, guid: ea5ec372cab838148ac5a31cb061e7c3, type: 3}
+  m_PrefabInstance: {fileID: 2901051652073368955}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

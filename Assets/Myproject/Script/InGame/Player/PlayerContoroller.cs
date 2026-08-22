@@ -11,6 +11,7 @@ using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.Rendering;
+using Cysharp.Threading.Tasks.CompilerServices;
 
 namespace TPSRoguelite.InGame.Player
 {
@@ -28,6 +29,8 @@ namespace TPSRoguelite.InGame.Player
 
         //攻撃距離（射撃範囲）
         private const float ATACK_RANGE = 50f;
+
+        private const float LEVEL_UP_EFFECT_DURATION = 2f;
 
         //物理演算コンポーネント
         [SerializeField] private Rigidbody rigidbody;
@@ -454,6 +457,12 @@ namespace TPSRoguelite.InGame.Player
         public void AddExp(int amount)
         {
             CurrentExp += amount;
+
+            if(CurrentExp >= RequiredExp)
+            {
+                LevelUp();
+            }
+
             UpdateExpUI();
         }
 
@@ -463,6 +472,35 @@ namespace TPSRoguelite.InGame.Player
             {
                 expBar.value = (float)CurrentExp / RequiredExp;
             }
+        }
+
+        private void LevelUp()
+        {
+            CurrentLevel++;
+
+            CurrentExp -= RequiredExp;
+
+            if(levelUpEffect != null)
+            {
+                levelUpEffect.Play();
+            }
+
+            ShowLebelUpTextAsync().Forget();
+        }
+
+        private async UniTaskVoid ShowLebelUpTextAsync()
+        {
+            if (levelUpText == null)
+            {
+                return;
+            }
+
+            levelUpText.enabled = true;
+            levelUpText.SetText($"Level Up\n<size=50%>Lv.{CurrentLevel}</size>");
+
+            await UniTask.Delay(TimeSpan.FromSeconds(LEVEL_UP_EFFECT_DURATION),cancellationToken: this.GetCancellationTokenOnDestroy());
+
+            levelUpText.enabled = false;
         }
     }
 }
