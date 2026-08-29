@@ -10,7 +10,7 @@ namespace Core.MasterData
     {
         [field: SerializeField] public ulong Id { get; private set; }
         [field: SerializeField] public string SkillName {  get; private set; }
-        [field: SerializeField] public string Desecription { get; private set; }
+        [field: SerializeField] public string Description { get; private set; }
         [field: SerializeField] public int SkillType { get; private set; }
         [field: SerializeField] public float Value { get; private set; }
     }

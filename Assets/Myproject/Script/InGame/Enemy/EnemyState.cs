@@ -78,6 +78,8 @@ namespace TPSRoguelite.InGame.Enemy
 
             CurrentHP -= damageAmount;
 
+            Debug.Log($"HP{CurrentHP}damage{damageAmount}");
+
             if(CurrentHP > 0)
             {
                 OnDamageAction?.Invoke();

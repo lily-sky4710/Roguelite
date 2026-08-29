@@ -127,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelRenderers:
   - {fileID: 7491390108600654386}
-  experienceOrbPrefab: {fileID: 356663307860245264}
+  experienceOrbPrefab: {fileID: 2613616678580689681, guid: a6fed301940f44344971532297536841, type: 3}
 --- !u!195 &7772440864909660455
 NavMeshAgent:
   m_ObjectHideFlags: 0

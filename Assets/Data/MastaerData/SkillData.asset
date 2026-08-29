@@ -15,26 +15,26 @@ MonoBehaviour:
   <Records>k__BackingField:
   - <Id>k__BackingField: 1
     <SkillName>k__BackingField: "\u4FCA\u8DB3"
-    <Desecription>k__BackingField: 
+    <Description>k__BackingField: "\u79FB\u52D5\u901F\u5EA6\u304C10%\u30A2\u30C3\u30D7"
     <SkillType>k__BackingField: 0
     <Value>k__BackingField: 0.1
   - <Id>k__BackingField: 2
     <SkillName>k__BackingField: "\u602A\u529B"
-    <Desecription>k__BackingField: 
+    <Description>k__BackingField: "\u653B\u6483\u529B\u304C20%\u30A2\u30C3\u30D7"
     <SkillType>k__BackingField: 1
     <Value>k__BackingField: 0.2
   - <Id>k__BackingField: 3
     <SkillName>k__BackingField: "\u65E9\u6483\u3061"
-    <Desecription>k__BackingField: 
+    <Description>k__BackingField: "\u9023\u5C04\u9593\u9694\u304C10%\u77ED\u7E2E"
     <SkillType>k__BackingField: 2
     <Value>k__BackingField: 0.1
   - <Id>k__BackingField: 4
     <SkillName>k__BackingField: "\u65E9\u696D"
-    <Desecription>k__BackingField: 
+    <Description>k__BackingField: "\u30EA\u30ED\u30FC\u30C9\u6642\u9593\u304C10%\u77ED\u7E2E"
     <SkillType>k__BackingField: 3
     <Value>k__BackingField: 0.1
   - <Id>k__BackingField: 5
     <SkillName>k__BackingField: "\u62E1\u5F35\u30DE\u30AC\u30B8\u30F3"
-    <Desecription>k__BackingField: 
+    <Description>k__BackingField: "\u6700\u5927\u5F3E\u6570\u304C5\u767A\u30A2\u30C3\u30D7"
     <SkillType>k__BackingField: 4
     <Value>k__BackingField: 5
