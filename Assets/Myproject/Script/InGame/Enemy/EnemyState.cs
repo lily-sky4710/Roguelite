@@ -150,8 +150,14 @@ namespace TPSRoguelite.InGame.Enemy
             {
                 ResetColor();
             }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            var player = collision.gameObject.GetComponent<IDamageable>();
+            if(player != null && collision.gameObject.CompareTag("Player"))
             {
-                
+                player.TakeDamage(10);
             }
         }
     }

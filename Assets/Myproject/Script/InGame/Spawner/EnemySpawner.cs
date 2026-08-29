@@ -1,9 +1,10 @@
-using UnityEngine;
-using UnityEngine.AI;
+using Core.MasterData;
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
 using TPSRoguelite.InGame.Enemy;
-using Core.MasterData;
+using UnityEngine;
+using UnityEngine.AI;
 
 namespace TPSRoguelite.InGame.Spawner
 {
@@ -61,7 +62,7 @@ namespace TPSRoguelite.InGame.Spawner
             //ñ≥å¿ÉãÅ[Év
             while (true)
             {
-                await UniTask.Delay(System.TimeSpan.FromSeconds(SPAWN_INTERVAL));
+                await UniTask.Delay(System.TimeSpan.FromSeconds(SPAWN_INTERVAL), cancellationToken:token);
                 SpawnEnemyFroPool();
             }
         }
